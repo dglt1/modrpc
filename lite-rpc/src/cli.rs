@@ -42,8 +42,8 @@ pub struct Config {
     pub prometheus_addr: String,
     #[serde(default = "Config::default_maximum_retries_per_tx")]
     pub maximum_retries_per_tx: usize,
-    #[serde(default = "Config::default_transaction_retry_after_secs")]
-    pub transaction_retry_after_secs: u64,
+    #[serde(default = "Config::default_transaction_retry_after_millis")]
+    pub transaction_retry_after_millis: u64,
     #[serde(default)]
     pub quic_proxy_addr: Option<String>,
     #[serde(default)]
@@ -151,9 +151,9 @@ impl Config {
             .map(|max| max.parse().unwrap())
             .unwrap_or(config.maximum_retries_per_tx);
 
-        config.transaction_retry_after_secs = env::var("RETRY_TIMEOUT")
-            .map(|secs| secs.parse().unwrap())
-            .unwrap_or(config.transaction_retry_after_secs);
+        config.transaction_retry_after_millis = env::var("RETRY_TIMEOUT_MILLIS")
+            .map(|millis| millis.parse().unwrap())
+            .unwrap_or(config.transaction_retry_after_millis);
 
         config.quic_proxy_addr = env::var("QUIC_PROXY_ADDR").ok();
 
@@ -263,8 +263,8 @@ impl Config {
         MAX_RETRIES
     }
 
-    pub const fn default_transaction_retry_after_secs() -> u64 {
-        DEFAULT_RETRY_TIMEOUT
+    pub const fn default_transaction_retry_after_millis() -> u64 {
+        5000 // dglt retry delay in ms (override via config)
     }
 
     pub fn default_grpc_addr() -> String {

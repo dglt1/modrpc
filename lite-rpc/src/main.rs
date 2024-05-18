@@ -107,7 +107,7 @@ pub async fn start_lite_rpc(args: Config, rpc_client: Arc<RpcClient>) -> anyhow:
         prometheus_addr,
         identity_keypair,
         maximum_retries_per_tx,
-        transaction_retry_after_secs,
+        transaction_retry_after_millis,
         quic_proxy_addr,
         use_grpc,
         enable_grpc_stream_inspection,
@@ -125,7 +125,7 @@ pub async fn start_lite_rpc(args: Config, rpc_client: Arc<RpcClient>) -> anyhow:
             .unwrap_or_else(Keypair::new),
     );
 
-    let retry_after = Duration::from_secs(transaction_retry_after_secs);
+    let retry_after = Duration::from_secs(transaction_retry_after_millis);
 
     let tpu_connection_path = configure_tpu_connection_path(quic_proxy_addr);
 
