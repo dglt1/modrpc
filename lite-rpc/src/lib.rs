@@ -34,7 +34,7 @@ pub const DEFAULT_RETRY_TIMEOUT: u64 = 3;
 #[from_env]
 pub const DEFAULT_CLEAN_INTERVAL_MS: u64 = 5 * 60 * 1000; // five minute
 pub const DEFAULT_TRANSACTION_CONFIRMATION_STATUS: TransactionConfirmationStatus =
-    TransactionConfirmationStatus::Finalized;
+    TransactionConfirmationStatus::Processed; // dglt change from finalized to processed
 
 #[from_env]
 pub const DEFAULT_GRPC_ADDR: &str = "http://localhost:10000";

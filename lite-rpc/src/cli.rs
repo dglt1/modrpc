@@ -264,7 +264,7 @@ impl Config {
     }
 
     pub const fn default_transaction_retry_after_millis() -> u64 {
-        5000 // dglt retry delay in ms (override via config)
+        DEFAULT_RETRY_TIMEOUT // dglt retry delay in ms (override via config)
     }
 
     pub fn default_grpc_addr() -> String {
